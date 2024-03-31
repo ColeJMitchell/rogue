@@ -8,6 +8,8 @@
 void Update::set_path(std::string path) {
     relative_path = path;
 }
+
+//restores health of a player based on id, used for health potions
 void Update::add_health(int id, int health) {
     sqlite3 *curr_db;
     int rc = sqlite3_open(relative_path.c_str(), &curr_db);
@@ -33,7 +35,7 @@ void Update::add_health(int id, int health) {
     }
     sqlite3_close(curr_db);
 }
-
+//damages player based on id for amount specified by dmg parameter of enemy
 void Update::damage_player_or_enemy(std::string table, int dmg, int id) {
     sqlite3 *curr_db;
     int rc = sqlite3_open(relative_path.c_str(), &curr_db);
@@ -61,7 +63,7 @@ void Update::damage_player_or_enemy(std::string table, int dmg, int id) {
     sqlite3_close(curr_db);
 }
 
-
+//changes the position of a player or enemy based on id, used for all movement
 void Update::change_pos(int id, int amount, std::string column, std::string table) {
     sqlite3 *curr_db;
     int rc = sqlite3_open(relative_path.c_str(), &curr_db);

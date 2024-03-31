@@ -10,6 +10,7 @@ void Select::set_path(std::string path) {
     relative_path = path;
 }
 
+//callback for finding number of rows in a table;
 int Select::cb_size(void *data, int argc, char **argv, char **azColName) {
     if(argc < 1) {
         std::cerr << "No data presented to callback "
@@ -23,6 +24,7 @@ int Select::cb_size(void *data, int argc, char **argv, char **azColName) {
     return 0;
 }
 
+//ca;l back for selecting a row from a table as a vector of strings
 int Select::cb_select_row(void *data, int argc, char **argv, char **azColName)
 {
     if(argc < 1) {
@@ -37,6 +39,7 @@ int Select::cb_select_row(void *data, int argc, char **argv, char **azColName)
     return 0;
 }
 
+//callback for pulling one integer value from the table
 int Select::cb_select_one(void *data, int argc, char **argv, char **azColName) {
     if(argc < 1) {
         std::cerr << "No data presented to callback "
@@ -49,7 +52,7 @@ int Select::cb_select_one(void *data, int argc, char **argv, char **azColName) {
     return 0;
 }
 
-
+//gets one integer entry in a table based on a passed id
 int Select::get_one_entry(std::string table, std::string column, int id) {
     sqlite3 *curr_db;
     int rc = sqlite3_open(relative_path.c_str(), &curr_db);
@@ -79,6 +82,7 @@ int Select::get_one_entry(std::string table, std::string column, int id) {
     return result;
 }
 
+//returns row based on passed id
 std::vector<std::string> Select::get_one_row_id(std::string table, int id) {
     sqlite3 *curr_db;
     int rc = sqlite3_open(relative_path.c_str(), &curr_db);
@@ -108,6 +112,7 @@ std::vector<std::string> Select::get_one_row_id(std::string table, int id) {
     return result;
 }
 
+//gets a row from a table based on a specified name of enemy or item, used for lookup on dungeon table
 std::vector<std::string> Select::get_one_row_string(std::string table, std::string name) {
     sqlite3 *curr_db;
     int rc = sqlite3_open(relative_path.c_str(), &curr_db);
@@ -137,6 +142,7 @@ std::vector<std::string> Select::get_one_row_string(std::string table, std::stri
     return result;
 }
 
+//returns the number of rows in table passed as a parameter, used to calculated what ids should be when there are concurrent games
 int Select::get_row_count(std::string table){
     sqlite3 *curr_db;
     int rc = sqlite3_open(relative_path.c_str(), &curr_db);

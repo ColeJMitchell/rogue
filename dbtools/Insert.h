@@ -7,8 +7,6 @@
 class Insert{
 public:
 void add_Player(int id);
-void add_Inventory(int id, std::string name, int damage, int row, int col);
-void add_Inventory(int id, std::string name, int damage);
 void add_enemy(int id, std::string name, int health, int damage, int row, int col);
 void add_Item(int id, std::string name, int damage, int amount, int row, int col);
 void set_path(std::string path);

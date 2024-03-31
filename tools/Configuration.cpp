@@ -50,7 +50,6 @@ void Configuration::loadFromFile(){
             configMap[key] = value;
         }
         inputFile.close();
-        std::cout << "Configuration loaded successfully from " <<filePath+fileName << std::endl;
     }
     catch(std::exception& e){
         std::cerr << "Error for reading from file " << e.what() << std::endl;
@@ -65,7 +64,6 @@ void Configuration::saveToFile(){
             outputFile<< pair.first << " " << pair.second <<std::endl;
         }
         outputFile.close();
-        std::cout << "Configuration saved to file " << filePath+fileName <<std::endl;
     }
     catch(std::exception& e){
         std::cerr <<"Error for saving "<<e.what()<<std::endl;

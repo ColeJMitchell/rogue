@@ -84,36 +84,6 @@ void Insert::add_Item(int id, std::string name, int damage, int amount,int row, 
 }
 
 
-//adds an item into the inventory table with row values equal to the function parameters
-void Insert::add_Inventory(int id, std::string name, int damage) {
-    sqlite3 *curr_db;
-    int rc = sqlite3_open(relative_path.c_str(), &curr_db);
-    int retCode = 0;
-    char *zErrMsg = 0;
-    std::string sql = "INSERT INTO inventory";
-    sql += " ( id, name, damage ) ";
-    sql += "VALUES " ;
-    sql +=  "( ";
-    sql += std::to_string(id);
-    sql += ", \"";
-    sql += name;
-    sql += "\", ";
-    sql += std::to_string(damage);
-    sql += ");";
-    retCode = sqlite3_exec(curr_db,
-                           sql.c_str(),
-                           0,
-                           0,
-                           &zErrMsg);
-    if (retCode != SQLITE_OK) {
-        std::cerr << sql
-                  << std::endl
-                  << "SQL error: "
-                  << zErrMsg;
-        sqlite3_free(zErrMsg);
-    }
-    sqlite3_close(curr_db);
-}
 
 //adds an enemy into the game by adding a row to the game_enemies table with values equal to the function parameters
 void Insert::add_enemy(int id, std::string name, int health, int damage, int row, int col){
