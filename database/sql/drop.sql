@@ -1,0 +1,10 @@
+drop table if exists players;
+drop table if exists games;
+drop table if exists dungeon;
+drop table if exists enemy_dungeon;
+drop table if exists enemy_game;
+drop table if exists inventory;
+drop table if exists dungeon_items;
+drop table if exists game_items;
+drop table if exists game_enemies;
+drop table if exists dungeon_enemies;
