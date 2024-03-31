@@ -87,6 +87,10 @@ add_executable(rogue TUI/rogue.cpp
         model/Hallway.h
         model/HallwayCoor.cpp
         model/HallwayCoor.h
+        tools/Log.cpp
+        tools/Log.h
+        tools/Configuration.cpp
+        tools/Configuration.h
 )
 
 

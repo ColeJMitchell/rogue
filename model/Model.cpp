@@ -21,12 +21,13 @@ int current_player;
 
 std::vector<int> enemy_ids;
 std::vector<int> item_ids;
-
+Log logger;
 Model::Model() {
     rowpos=20;
     colpos=5;
     screen_page = 0;
     enemies_slain = 0;
+    logger.open_file("logger.txt");
     d1.set_path("database/rogue.sqlite");
     s1.set_path("database/rogue.sqlite");
     u1.set_path("database/rogue.sqlite");
@@ -125,6 +126,7 @@ void Model::reload_dungeon() {
 //checks to see if player is dead and switches to death screen if it is
 if(s1.get_one_entry("players","health",current_player)<=0){
     screen_page=1;
+    logger<<"Player Death ID = " << current_player;
     return;
 }
 
