@@ -68,6 +68,12 @@ int main()
                         mvprintw(25, 102, "YOU DIED");
                         break;
                     }
+                    case 2:{
+                        game_end(m);
+                        attron(A_BOLD);
+                        mvprintw(25, 90, "YOU OBTAINED THE AMULET OF YENDOR!!!");
+                        break;
+                    }
                 }
         }
     } while(continue_looping);

@@ -185,6 +185,11 @@ for(int i :item_ids){
         }
         else if(temp[1]=="Amulet") {
             whole_buffer[erow][ecol] = 'A';
+            if(s1.get_one_entry("players","row",current_player)==erow&&s1.get_one_entry("players","col",current_player)==ecol){
+                screen_page=2;
+                item_ids.erase(item_ids.begin()+counter2);
+            }
+
         }
         counter2++;
     }
