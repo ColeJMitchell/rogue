@@ -10,6 +10,8 @@
 // to an object
 void draw_map_screen(Model &m, int action);
 
+void game_end(Model &m);
+
 int main()
 {
     Model m;
@@ -47,7 +49,6 @@ int main()
         refresh();
 
         // obtain character from keyboard
-        int screen_number = 0;
         int ch = getch();
 
         switch (ch) {
@@ -56,9 +57,15 @@ int main()
                 break;
             default:
                 // draw the current screen
-                switch (screen_number) {
+                switch (m.screen_page) {
                     case 0: {
                         draw_map_screen(m, ch);
+                        break;
+                    }
+                    case 1:{
+                        game_end(m);
+                        attron(A_BOLD);
+                        mvprintw(25, 102, "YOU DIED");
                         break;
                     }
                 }
@@ -71,6 +78,20 @@ int main()
     std::cout << "exiting main\n";
     return 0;
 }
+
+void game_end(Model &m) {
+    int row_offset = 5;
+    int col_offset = 0;
+    //makes ever charachter in buffer blank
+    m.wipe_screen();
+    //displays the buffer
+    for (int row = 0; row < m.max_rows(); row++) {
+        for (int col = 0; col < m.max_cols(); col++) {
+            mvprintw(row + row_offset, col + col_offset, "%c", m.buffer_value(row, col));
+        }
+    }
+}
+
 
 
 // a function for drawing the map screen
@@ -114,6 +135,3 @@ void draw_map_screen(Model &m, int action) {
 
 }
 
-void game_over(){
-
-}

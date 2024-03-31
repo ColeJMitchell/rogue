@@ -12,6 +12,7 @@
 class Model{
 public:
     Model();
+    int screen_page;
     void reload_dungeon();
     void move_up();
     void move_down();
@@ -26,6 +27,7 @@ public:
     int is_in_the_room(int col, int row);
     void set_constraint();
     void move_random(int id);
+    void wipe_screen();
 private:
     std::vector<std::vector<char>> whole_buffer;
     std::vector<Room> rooms;
@@ -37,6 +39,5 @@ private:
     int right;
     int up;
     int down;
-
 };
 #endif //REPO_LAB6_3_MITCHECJ_JIANGY_MODEL_H

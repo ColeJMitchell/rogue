@@ -25,6 +25,7 @@ std::vector<int> item_ids;
 Model::Model() {
     rowpos=20;
     colpos=5;
+    screen_page = 0;
     d1.set_path("database/rogue.sqlite");
     s1.set_path("database/rogue.sqlite");
     u1.set_path("database/rogue.sqlite");
@@ -119,6 +120,14 @@ Model::Model() {
 //the entrance_exit of this room should be shown as "+"(entrance_exit point is also included in the hallway coordinate lists)
 //finally, display "@"
 void Model::reload_dungeon() {
+
+//checks to see if player is dead and switches to death screen if it is
+if(s1.get_one_entry("players","health",current_player)<=0){
+    screen_page=1;
+    return;
+}
+
+
 //refresh the buffer before making any change
     for(int row = 0; row < ROWMAX; row++){
         for(int col = 0; col < COLMAX; col++){
@@ -179,6 +188,8 @@ for(int i :item_ids){
         }
         counter2++;
     }
+    //displays the character
+    whole_buffer[rowpos][colpos] = '@';
     // place the game item
     //iterate over all enemy ids and place them on map, also have each enemy move randomly once per turn
     int counter=0;
@@ -262,8 +273,6 @@ for(int i :item_ids){
         }
         counter++;
     }
-
-    whole_buffer[rowpos][colpos] = '@';
 }
 
 //these four functions are moving controller, with four constrains(up,down, left, right) and updats player position in the database
@@ -434,4 +443,11 @@ void Model::set_constraint(){
         }
     }
 }
-
+//wipes the entire screen
+void Model::wipe_screen(){
+    for(int row = 0; row < ROWMAX; row++){
+        for(int col = 0; col < COLMAX; col++){
+            whole_buffer[row][col]=' ';
+        }
+    }
+}
