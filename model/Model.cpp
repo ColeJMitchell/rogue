@@ -32,12 +32,13 @@ Model::Model() {
     s1.set_path("database/rogue.sqlite");
     u1.set_path("database/rogue.sqlite");
     int player_id_counter = s1.get_row_count("players");
+    logger<<"player spawned at row = 20 col = 5 id = "<<current_player<<"\n";
     p1.create_new_player(player_id_counter);
     p1.update_player_pos(player_id_counter,rowpos,colpos);
     current_player = player_id_counter;
     Game g;
-    enemy_ids = g.add_all_enemies();
-    item_ids = g.add_all_items();
+    enemy_ids = g.add_all_enemies(logger);
+    item_ids = g.add_all_items(logger);
   //creates rooms with entr_exit points, room size and room offsets
     std::vector<std::vector<Coordinate>> entrance_exit(4);
     entrance_exit[0].push_back(Coordinate(11,23));

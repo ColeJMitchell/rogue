@@ -6,6 +6,7 @@
 #define REPO_LAB6_3_MITCHECJ_JIANGY_GAME_H
 
 #include <vector>
+#include "Log.h"
 
 class Game{
 public:
@@ -22,14 +23,16 @@ public:
 
     void update_player_col(int id, int col);
 
-    std::vector<int> add_all_enemies();
 
     void spawn_enemy(int id, std::string name, int row, int col);
 
-    std::vector<int> add_all_items();
 
     void spawn_item(int id, std::string name);
 
     void spawn_item(int id, std::string name, int row, int col);
+
+    std::vector<int> add_all_enemies(Log &logger);
+
+    std::vector<int> add_all_items(Log &logger);
 };
 #endif //REPO_LAB6_3_MITCHECJ_JIANGY_GAME_H
