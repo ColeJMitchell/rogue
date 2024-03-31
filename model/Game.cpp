@@ -65,6 +65,10 @@ std::vector<int> Game::add_all_items(){
     spawn_item(c++,"Health_potion",30,65);
     v.push_back(c);
     spawn_item(c++,"Health_potion",14,70);
+    v.push_back(c);
+    spawn_item(c++,"Health_potion",12,66);
+    v.push_back(c);
+    spawn_item(c++,"Health_potion",35,62);
     return v;
 }
 
