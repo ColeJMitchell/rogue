@@ -26,6 +26,7 @@ Model::Model() {
     rowpos=20;
     colpos=5;
     screen_page = 0;
+    enemies_slain = 0;
     d1.set_path("database/rogue.sqlite");
     s1.set_path("database/rogue.sqlite");
     u1.set_path("database/rogue.sqlite");
@@ -235,26 +236,32 @@ for(int i :item_ids){
         if(s1.get_one_entry("players","row",current_player)==new_erow+1&&s1.get_one_entry("players","col",current_player)==new_ecol){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
+            enemies_slain++;
         }
         else if(s1.get_one_entry("players","row",current_player)==new_erow-1&&s1.get_one_entry("players","col",current_player)==new_ecol){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
+            enemies_slain++;
         }
         else if(s1.get_one_entry("players","row",current_player)==new_erow+1&&s1.get_one_entry("players","col",current_player)==new_ecol+1){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
+            enemies_slain++;
         }
         else if(s1.get_one_entry("players","row",current_player)==new_erow&&s1.get_one_entry("players","col",current_player)==new_ecol+1){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
+            enemies_slain++;
         }
         else if(s1.get_one_entry("players","row",current_player)==new_erow&&s1.get_one_entry("players","col",current_player)==new_ecol-1){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
+            enemies_slain++;
         }
         else if(s1.get_one_entry("players","row",current_player)==new_erow-1&&s1.get_one_entry("players","col",current_player)==new_ecol-1){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
+            enemies_slain++;
         }
         //check to see what charachter should be displayed for each enemy in the database
         std::vector<std::string> temp = s1.get_one_row_id("game_enemies",i);
@@ -455,4 +462,8 @@ void Model::wipe_screen(){
             whole_buffer[row][col]=' ';
         }
     }
+}
+//returns current health of player to be displayed
+int Model::return_health(){
+    return s1.get_one_entry("players","health",current_player);
 }

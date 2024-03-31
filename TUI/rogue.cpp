@@ -42,6 +42,7 @@ int main()
 
     draw_map_screen(m, 1);
     do {
+        int health = m.return_health();
 
         mvprintw(1, 1, "q - quit program");
 
@@ -60,11 +61,17 @@ int main()
                 switch (m.screen_page) {
                     case 0: {
                         draw_map_screen(m, ch);
+                        //prints current player health
+                        mvprintw(1,30,"Player Health: %d",health);
+                        mvprintw(1,60,"Enemies Slain: %d",m.enemies_slain);
                         break;
                     }
                     case 1:{
                         game_end(m);
                         attron(A_BOLD);
+                        //clears health and num enemies slain on death
+                        mvprintw(1,30,"                    ");
+                        mvprintw(1,60,"                     ");
                         mvprintw(25, 102, "YOU DIED");
                         break;
                     }

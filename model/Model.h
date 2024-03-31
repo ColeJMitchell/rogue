@@ -13,6 +13,7 @@ class Model{
 public:
     Model();
     int screen_page;
+    int enemies_slain;
     void reload_dungeon();
     void move_up();
     void move_down();
@@ -28,6 +29,7 @@ public:
     void set_constraint();
     void move_random(int id);
     void wipe_screen();
+    int return_health();
 private:
     std::vector<std::vector<char>> whole_buffer;
     std::vector<Room> rooms;
