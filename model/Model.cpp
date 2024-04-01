@@ -16,27 +16,27 @@
 Select s1;
 Update u1;
 Delete d1;
-Player p1;
 int current_player;
 
 std::vector<int> enemy_ids;
 std::vector<int> item_ids;
 Log logger;
-Model::Model() {
+Model::Model(std::string filepath) {
     rowpos=20;
     colpos=5;
     screen_page = 0;
     enemies_slain = 0;
     logger.open_file("logger.txt");
-    d1.set_path("database/rogue.sqlite");
-    s1.set_path("database/rogue.sqlite");
-    u1.set_path("database/rogue.sqlite");
+    d1.set_path(filepath);
+    s1.set_path(filepath);
+    u1.set_path(filepath);
+    Player p1(filepath);
     int player_id_counter = s1.get_row_count("players");
     logger<<"player spawned at row = 20 col = 5 id = "<<current_player<<"\n";
     p1.create_new_player(player_id_counter);
     p1.update_player_pos(player_id_counter,rowpos,colpos);
     current_player = player_id_counter;
-    Game g;
+    Game g(filepath);
     enemy_ids = g.add_all_enemies(logger);
     item_ids = g.add_all_items(logger);
   //creates rooms with entr_exit points, room size and room offsets
@@ -140,7 +140,7 @@ if(s1.get_one_entry("players","health",current_player)<=0){
     }
 
 //add hallways to the whole_buffer
-for(auto & hallway : hallways){
+for(auto &hallway : hallways){
     for (int row = 0; row < hallway.get_rowMax(); row++) {
         for (int col = 0; col < hallway.get_colMax(); col++) {
             hallway.appear_or_not(colpos,rowpos);
@@ -152,7 +152,7 @@ for(auto & hallway : hallways){
     }
 }
 //add rooms to the whole_buffer
-for(auto & room : rooms) {
+for(auto &room : rooms) {
     for (int row = 0; row < room.get_rowMax(); row++) {
         for (int col = 0; col < room.get_colMax(); col++) {
             room.appear_or_not(colpos,rowpos);
@@ -363,11 +363,11 @@ bool Model::is_vertical(int col, int row) {
         return true;
     } else if (whole_buffer[row - 1][col] == '#' && whole_buffer[row + 1][col] == '.') {
         return true;
-    } else if (whole_buffer[row - 1][col] == '#' && whole_buffer[row + 1][col] == '#') {//fix here
+    } else if (whole_buffer[row - 1][col] == '#' && whole_buffer[row + 1][col] == '#') {
         return true;
-    } else if (whole_buffer[row - 1][col] == '+' && whole_buffer[row + 1][col] == '#') {//fix here
+    } else if (whole_buffer[row - 1][col] == '+' && whole_buffer[row + 1][col] == '#') {
         return true;
-    } else if (whole_buffer[row - 1][col] == '#' && whole_buffer[row + 1][col] == '+') {//fix here
+    } else if (whole_buffer[row - 1][col] == '#' && whole_buffer[row + 1][col] == '+') {
         return true;
     } else {
         return false;
@@ -415,7 +415,7 @@ int Model::is_in_the_room(int col, int row){
 void Model::set_constraint(){
     if(is_in_the_room(colpos, rowpos) != -1){//the player is in the room
         int i=is_in_the_room(colpos, rowpos);
-        if(rooms[i].if_entrance_around(colpos,rowpos)){
+        if(rooms[i].if_entrance_around(colpos,rowpos)){//check if there are entrance point around
             left=0;
             right=COLMAX;
             up=0;
@@ -488,4 +488,37 @@ void Model::wipe_screen(){
 //returns current health of player to be displayed
 int Model::return_health(){
     return s1.get_one_entry("players","health",current_player);
+}
+
+//------------------------------------
+//these are functions for unittest
+void Model::all_appear(){
+    for(Room &r: rooms){
+        r.first_room();
+    }
+    for(Hallway &h:hallways){
+        for(HallwayCoor &c:h.get_lists()){
+            c.set_appear();
+        }
+    }
+}
+//return the left constraint
+int Model::get_left() {
+    return left;
+}
+//return the right constraint
+int Model::get_right() {
+    return right;
+}
+//return the up constraint
+int Model::get_up() {
+    return up;
+}
+//return the down constraint
+int Model::get_down() {
+    return down;
+};
+void Model::set_position(int col, int row){
+    colpos=col;
+    rowpos=row;
 }

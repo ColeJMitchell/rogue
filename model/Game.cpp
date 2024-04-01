@@ -11,10 +11,10 @@
 Update u3;
 Select s3;
 Insert i3;
-Game::Game(){
-    s3.set_path("database/rogue.sqlite");
-    u3.set_path("database/rogue.sqlite");
-    i3.set_path("database/rogue.sqlite");
+Game::Game(std::string databasePath){
+    s3.set_path(databasePath);
+    u3.set_path(databasePath);
+    i3.set_path(databasePath);
 }
 
 //adds all the enemies to current game by using the dungeon lookup table starts at row count so multiple games can run at same time
@@ -96,7 +96,6 @@ std::vector<int> Game::add_all_items(Log &logger){
 
 //helper function for spawning enemies
 void Game::spawn_enemy(int id, std::string name, int row, int col) {
-    i3.set_path("database/rogue.sqlite");
     std::vector<std::string> v;
     v = s3.get_one_row_string("dungeon_enemies",name);
     i3.add_enemy(id,v[0],std::stoi(v[1]),std::stoi(v[2]),row,col);
@@ -104,7 +103,6 @@ void Game::spawn_enemy(int id, std::string name, int row, int col) {
 
 //helper function for spawning items
 void Game::spawn_item(int id, std::string name,int row, int col) {
-    i3.set_path("database/rogue.sqlite");
     std::vector<std::string> v;
     v = s3.get_one_row_string("dungeon_items",name);
     i3.add_Item(id,v[0],std::stoi(v[1]),std::stoi(v[2]),row,col);

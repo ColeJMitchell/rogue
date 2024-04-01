@@ -31,8 +31,8 @@ void Room::reload_room(){
    if(appear) {
        for (int row = 0; row < row_max; row++) {
            for (int col = 0; col < col_max; col++) {
-               if(if_at_entrance_exit(col+offsetc,row+offsetr))  buffer[row][col] = '+';//it is not necessary pro
-               else if (row == 0)                buffer[row][col] = '-';
+               if(if_at_entrance_exit(col+offsetc,row+offsetr))  buffer[row][col] = '+';//the first room needs to have "+" appear and for later constraints set
+               else if (row == 0)                     buffer[row][col] = '-';
                else if (row == row_max - 1)      buffer[row][col] = '-';
                else if (col == 0)                buffer[row][col] = '|';
                else if (col == col_max - 1)      buffer[row][col] = '|';
@@ -43,11 +43,7 @@ void Room::reload_room(){
    else{
        for (int row = 0; row < row_max; row++) {
            for (int col = 0; col < col_max; col++) {
-               if (row == 0)                buffer[row][col] = ' ';
-               else if (row == row_max - 1) buffer[row][col] = ' ';
-               else if (col == 0)           buffer[row][col] = ' ';
-               else if (col == col_max - 1) buffer[row][col] = ' ';
-               else                         buffer[row][col] = ' ';
+               buffer[row][col] = ' ';
            }
        }
    }

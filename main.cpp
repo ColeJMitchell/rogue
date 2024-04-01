@@ -11,7 +11,7 @@
 Insert i1;
 Delete d1;
 Select s1;
-Game g1;
+Game g1("../database/rogue.sqlite");
 int main(int argc, char **argv) {
     s1.set_path("../database/rogue.sqlite");
     i1.set_path("../database/rogue.sqlite");

@@ -9,7 +9,7 @@
 class Room {
 public:
     Room(std::vector<Coordinate> lists,int colMax, int rowMax, int offsetc, int offsetr);
-    bool if_at_entrance_exit(int row, int col);
+    bool if_at_entrance_exit(int col, int row);
     void reload_room();
     void appear_or_not(int col, int row);
     bool get_appear();
@@ -18,7 +18,7 @@ public:
     int get_rowMax();
     int get_offsetr();
     int get_offsetc();
-    char buffer_value(int col, int row);
+    char buffer_value(int row, int col);
     bool if_at_this_room(int col, int row);
     bool if_entrance_around(int col, int row);
 

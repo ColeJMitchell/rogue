@@ -11,7 +11,7 @@
 #include "Hallway.h"
 class Model{
 public:
-    Model();
+    Model(std::string filepath);
     int screen_page;
     int enemies_slain;
     void reload_dungeon();
@@ -30,6 +30,14 @@ public:
     void move_random(int id);
     void wipe_screen();
     int return_health();
+    void all_appear();//this is for unittest
+
+    //this is for unittest
+    int get_left();
+    int get_right();
+    int get_up();
+    int get_down();
+    void set_position(int col, int row);//set the position of player for testing
 private:
     std::vector<std::vector<char>> whole_buffer;
     std::vector<Room> rooms;

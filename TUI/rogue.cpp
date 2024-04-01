@@ -14,7 +14,7 @@ void game_end(Model &m);
 
 int main()
 {
-    Model m;
+    Model m("database/rogue.sqlite");
 
     // initialize the screen
     initscr();
