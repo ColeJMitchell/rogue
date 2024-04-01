@@ -14,6 +14,7 @@
 #include "Hallway.h"
 #include "Model.h"
 #include "Game.h"
+#include "Player.h"
 
 class ConfigurationTest : public ::testing::Test {
 protected:
@@ -45,7 +46,7 @@ TEST_F(ConfigurationTest, TESTFIXTURE) {
     ASSERT_EQ(c1->getValue("in"), c2->getValue("in")) << "These should match!";
 }
 
-/*class LogTest : public ::testing::Test {
+class LogTest : public ::testing::Test {
 protected:
     virtual void SetUp() {
         l1 = new Log("config.txt");
@@ -238,7 +239,7 @@ TEST_F(SelectTest, TESTFIXTURE) {
     ASSERT_EQ(s1->get_row_count("game_items"),1);
     //makes sure that you can get one entry for this example damage works properly
     ASSERT_EQ(s1->get_one_entry("game_items","damage",300),1000);
-}*/
+}
 
 class RoomTest : public ::testing ::Test{
 protected:
@@ -599,6 +600,22 @@ TEST_F(GameTest, TEXTFXITURE){
     expected3.push_back(std::to_string(35));
     expected3.push_back(std::to_string(62));
     ASSERT_EQ(s->get_one_row_id("game_items",4),expected3);*/
+}
+class PlayerTest:public::testing::Test{
+protected:
+    void SetUp() override{
+        p1=new Player("../database/rogue.sqlite");
+        s=new Select();
+        s->set_path("../database/rogue.sqlite");
+    }
+    void TearDown() override{
+        delete p1;
+    }
+    Player *p1;
+    Select *s;
+};
+TEST_F(PlayerTest,TEXTFIXCTURE){
+
 }
 int main(int argc, char **argv) {
     ::testing::InitGoogleTest(&argc, argv);
