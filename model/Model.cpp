@@ -194,6 +194,7 @@ for(int i :item_ids){
                 logger<<"player picked up amulet of yendor id = "<<i << "\n";
                 screen_page=2;
                 item_ids.erase(item_ids.begin()+counter2);
+                return;
             }
 
         }
