@@ -31,8 +31,8 @@ void Room::reload_room(){
    if(appear) {
        for (int row = 0; row < row_max; row++) {
            for (int col = 0; col < col_max; col++) {
-               if(if_at_entrance_exit(col+offsetc,row+offsetr))  buffer[row][col] = '+';//it is not necessary pro
-               else if (row == 0)                buffer[row][col] = '-';
+               if(if_at_entrance_exit(col+offsetc,row+offsetr))  buffer[row][col] = '+';//the first room needs to have "+" appear and for later constraints set
+               else if (row == 0)                     buffer[row][col] = '-';
                else if (row == row_max - 1)      buffer[row][col] = '-';
                else if (col == 0)                buffer[row][col] = '|';
                else if (col == col_max - 1)      buffer[row][col] = '|';
@@ -43,11 +43,7 @@ void Room::reload_room(){
    else{
        for (int row = 0; row < row_max; row++) {
            for (int col = 0; col < col_max; col++) {
-               if (row == 0)                buffer[row][col] = ' ';
-               else if (row == row_max - 1) buffer[row][col] = ' ';
-               else if (col == 0)           buffer[row][col] = ' ';
-               else if (col == col_max - 1) buffer[row][col] = ' ';
-               else                         buffer[row][col] = ' ';
+               buffer[row][col] = ' ';
            }
        }
    }
@@ -97,9 +93,18 @@ bool Room::if_at_this_room(int col, int row){
 }
 //this is a helper function for setting constrain
 //if the player has the same row or col with the extrance or exit point of this room, return true
-bool Room::if_same_line(int col, int row){
+bool Room::if_entrance_around(int col, int row){
     for(Coordinate c:entrance_or_exit){
-        if(c.get_row()==row || c.get_col()==col){
+        if(c.get_row()==row+1 && c.get_col()==col){
+            return true;
+        }
+        else if(c.get_row()==row-1 && c.get_col()==col){
+            return true;
+        }
+        else if(c.get_row()==row && c.get_col()==col+1){
+            return true;
+        }
+        else if(c.get_row()==row && c.get_col()==col-1){
             return true;
         }
     }

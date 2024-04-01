@@ -5,6 +5,7 @@
 #include "ncurses.h"
 #include <string>
 #include <Model.h>
+#include "Configuration.h"
 
 // forward reference of function with a passed reference
 // to an object
@@ -14,7 +15,8 @@ void game_end(Model &m);
 
 int main()
 {
-    Model m;
+    Configuration c("./","config.txt");
+    Model m(c.getValue("database_path"));
 
     // initialize the screen
     initscr();

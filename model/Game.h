@@ -10,7 +10,7 @@
 
 class Game{
 public:
-    Game();
+    Game(std::string databasePath);
     std::vector<int> list_of_enemy_ids;
     int id_counter=0;
     int num_moves=0;

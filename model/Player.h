@@ -4,8 +4,12 @@
 
 #ifndef REPO_LAB6_3_MITCHECJ_JIANGY_PLAYER_H
 #define REPO_LAB6_3_MITCHECJ_JIANGY_PLAYER_H
+
+#include <string>
+
 class Player{
 public:
+    Player(const std::string& databasePath);
     void create_new_player(int id);
     void update_player_pos(int id, int row, int col);
     void remove_player(int id);

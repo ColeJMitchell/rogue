@@ -1,1 +1,2 @@
+database_path database/rogue.sqlite
 in out

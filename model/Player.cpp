@@ -8,9 +8,12 @@
 Insert i;
 Update u;
 Delete d;
+Player::Player(const std::string& databasePath){
+    i.set_path(databasePath);
+    u.set_path(databasePath);
+}
 void Player::create_new_player(int id) {
-    i.set_path("database/rogue.sqlite");
-    u.set_path("database/rogue.sqlite");
+
     i.add_Player(id);
 }
 void Player::update_player_pos(int id, int row, int col) {
