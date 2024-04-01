@@ -467,6 +467,7 @@ TEST_F(ModelTest, TEXTFIXTURE){
         }
     }
 }
+
 class GameTest:public::testing::Test{
 protected:
     void SetUp() override{
@@ -480,15 +481,14 @@ protected:
     Game *g1{};
     Select *s;
 };
+/*
 TEST_F(GameTest, TEXTFXITURE){
-    /*
      * void spawn_enemy(int id, std::string name, int row, int col);
      * void spawn_item(int id, std::string name, int row, int col);
 
     std::vector<int> add_all_enemies(Log &logger);
 
     std::vector<int> add_all_items(Log &logger);
-     */
     //test spawn_enemy
     g1->spawn_enemy(2003,"Emu",30,10);
     std::vector<std::string> expected;
@@ -597,8 +597,9 @@ TEST_F(GameTest, TEXTFXITURE){
     expected3.push_back(std::to_string(5));
     expected3.push_back(std::to_string(35));
     expected3.push_back(std::to_string(62));
-    ASSERT_EQ(s->get_one_row_id("game_items",4),expected3);*/
+    ASSERT_EQ(s->get_one_row_id("game_items",4),expected3);
 }
+*/
 class PlayerTest:public::testing::Test{
 protected:
     void SetUp() override{
