@@ -144,7 +144,7 @@ for(auto & hallway : hallways){
         for (int col = 0; col < hallway.get_colMax(); col++) {
             hallway.appear_or_not(colpos,rowpos);
             hallway.reload_hallway();
-            if(whole_buffer[row+hallway.get_offsetr()][col+hallway.get_offsetc()]!='+'){
+            if(whole_buffer[row+hallway.get_offsetr()][col+hallway.get_offsetc()]!='+'){//avoid one hallway buffer covering other hallways
             whole_buffer[row+hallway.get_offsetr()][col+hallway.get_offsetc()]=hallway.buffer_value(row, col);
             }
         }
@@ -163,6 +163,7 @@ for(auto & room : rooms) {
 
 //update the entrance point of each room
 //go through all hallways, let the last coordinate in each hallway show the buffer of each hallway
+//the room would cover the entrance point
 for(int i=0;i<hallways.size();i++){
     std::vector<HallwayCoor>& s=hallways[i].get_lists();
    int j=s.size()-1;
@@ -170,6 +171,7 @@ for(int i=0;i<hallways.size();i++){
             int col=s[j].get_col();
             whole_buffer[row][col]=hallways[i].buffer_value(row-hallways[i].get_offsetr(), col-hallways[i].get_offsetc());
 }
+
 //displays the items and checks for player collision
 int counter2 = 0;
 for(int i :item_ids){
@@ -395,7 +397,7 @@ int Model::is_in_the_room(int col, int row){
 void Model::set_constraint(){
     if(is_in_the_room(colpos, rowpos) != -1){//the player is in the room
         int i=is_in_the_room(colpos, rowpos);
-        if(rooms[i].if_same_line(colpos,rowpos)){
+        if(rooms[i].if_entrance_around(colpos,rowpos)){
             left=0;
             right=COLMAX;
             up=0;

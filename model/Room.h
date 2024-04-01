@@ -20,7 +20,7 @@ public:
     int get_offsetc();
     char buffer_value(int col, int row);
     bool if_at_this_room(int col, int row);
-    bool if_same_line(int col, int row);
+    bool if_entrance_around(int col, int row);
 
 private:
     std::vector<Coordinate> entrance_or_exit;

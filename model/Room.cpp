@@ -97,9 +97,18 @@ bool Room::if_at_this_room(int col, int row){
 }
 //this is a helper function for setting constrain
 //if the player has the same row or col with the extrance or exit point of this room, return true
-bool Room::if_same_line(int col, int row){
+bool Room::if_entrance_around(int col, int row){
     for(Coordinate c:entrance_or_exit){
-        if(c.get_row()==row || c.get_col()==col){
+        if(c.get_row()==row+1 && c.get_col()==col){
+            return true;
+        }
+        else if(c.get_row()==row-1 && c.get_col()==col){
+            return true;
+        }
+        else if(c.get_row()==row && c.get_col()==col+1){
+            return true;
+        }
+        else if(c.get_row()==row && c.get_col()==col-1){
             return true;
         }
     }
