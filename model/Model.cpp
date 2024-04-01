@@ -32,12 +32,13 @@ Model::Model() {
     s1.set_path("database/rogue.sqlite");
     u1.set_path("database/rogue.sqlite");
     int player_id_counter = s1.get_row_count("players");
+    logger<<"player spawned at row = 20 col = 5 id = "<<current_player<<"\n";
     p1.create_new_player(player_id_counter);
     p1.update_player_pos(player_id_counter,rowpos,colpos);
     current_player = player_id_counter;
     Game g;
-    enemy_ids = g.add_all_enemies();
-    item_ids = g.add_all_items();
+    enemy_ids = g.add_all_enemies(logger);
+    item_ids = g.add_all_items(logger);
   //creates rooms with entr_exit points, room size and room offsets
     std::vector<std::vector<Coordinate>> entrance_exit(4);
     entrance_exit[0].push_back(Coordinate(11,23));
@@ -126,7 +127,7 @@ void Model::reload_dungeon() {
 //checks to see if player is dead and switches to death screen if it is
 if(s1.get_one_entry("players","health",current_player)<=0){
     screen_page=1;
-    logger<<"Player Death ID = " << current_player;
+    logger<<"player died id = " << current_player << "\n";
     return;
 }
 
@@ -184,6 +185,7 @@ for(int i :item_ids){
         if(temp[1]=="Health_potion"){
             whole_buffer[erow][ecol] = '%';
             if(s1.get_one_entry("players","row",current_player)==erow&&s1.get_one_entry("players","col",current_player)==ecol){
+                logger<<"player picked up health potion id = "<<i << "\n";
                 u1.add_health(current_player,10);
                 item_ids.erase(item_ids.begin()+counter2);
             }
@@ -191,6 +193,7 @@ for(int i :item_ids){
         else if(temp[1]=="Amulet") {
             whole_buffer[erow][ecol] = 'A';
             if(s1.get_one_entry("players","row",current_player)==erow&&s1.get_one_entry("players","col",current_player)==ecol){
+                logger<<"player picked up amulet of yendor id = "<<i << "\n";
                 screen_page=2;
                 item_ids.erase(item_ids.begin()+counter2);
             }
@@ -204,6 +207,7 @@ for(int i :item_ids){
     //iterate over all enemy ids and place them on map, also have each enemy move randomly once per turn
     int counter=0;
     for(int i:enemy_ids){
+        std::vector<std::string> temp = s1.get_one_row_id("game_enemies",i);
         int erow = s1.get_one_entry("game_enemies","row",i);
         int ecol = s1.get_one_entry("game_enemies","col",i);
         if(whole_buffer[erow][ecol+1]!='.'&&whole_buffer[erow][ecol-1]!='.'&&whole_buffer[erow+1][ecol]!='.'&&whole_buffer[erow-1][ecol]!='.'){
@@ -215,21 +219,26 @@ for(int i :item_ids){
             case 0:
                 if(whole_buffer[erow+1][ecol]=='.'){
                     u1.change_pos(i,erow+1,"row","game_enemies");
+                    logger <<temp[1] << " moved to position row = "<<s1.get_one_entry("game_enemies","row",i)<<" col = "<<ecol << " id = "<<i<< "\n";
                 }
                 break;
             case 1:
                 if(whole_buffer[erow-1][ecol]=='.') {
                     u1.change_pos(i, erow-1, "row", "game_enemies");
+                    logger<<temp[1] << " moved to position row = "<<s1.get_one_entry("game_enemies","row",i)<<" col = "<<ecol << " id = "<<i <<"\n";
                 }
                 break;
             case 2:
                 if(whole_buffer[erow][ecol+1]=='.') {
                     u1.change_pos(i, ecol+1, "col", "game_enemies");
+                    logger<<temp[1] << " moved to position row = "<<erow<<" col = "<<s1.get_one_entry("game_enemies","col",i)<<" id = "<<i <<"\n";
                 }
                 break;
             case 3:
                 if(whole_buffer[erow][ecol-1]=='.') {
                     u1.change_pos(i, ecol-1, "col", "game_enemies");
+                    logger<<temp[1] << " moved to position row =  "<<erow<<" col = "<<s1.get_one_entry("game_enemies","col",i)<<" id = "<<i <<"\n";
+
                 }
                 break;
         }
@@ -241,34 +250,39 @@ for(int i :item_ids){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
             enemies_slain++;
+            logger << temp[1] << " slain by player id = "<<i<<"\n";
         }
         else if(s1.get_one_entry("players","row",current_player)==new_erow-1&&s1.get_one_entry("players","col",current_player)==new_ecol){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
             enemies_slain++;
+            logger<< temp[1] << " slain by player id = "<<i<<"\n";
         }
         else if(s1.get_one_entry("players","row",current_player)==new_erow+1&&s1.get_one_entry("players","col",current_player)==new_ecol+1){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
             enemies_slain++;
+            logger << temp[1] << " slain by player id = "<<i<<"\n";
         }
         else if(s1.get_one_entry("players","row",current_player)==new_erow&&s1.get_one_entry("players","col",current_player)==new_ecol+1){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
             enemies_slain++;
+            logger<< temp[1] << " slain by player id = "<<i<<"\n";
         }
         else if(s1.get_one_entry("players","row",current_player)==new_erow&&s1.get_one_entry("players","col",current_player)==new_ecol-1){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
             enemies_slain++;
+            logger << temp[1] << " slain by player id = "<<i<<"\n";
         }
         else if(s1.get_one_entry("players","row",current_player)==new_erow-1&&s1.get_one_entry("players","col",current_player)==new_ecol-1){
             u1.damage_player_or_enemy("players",s1.get_one_entry("game_enemies","damage",i),current_player);
             enemy_ids.erase(enemy_ids.begin()+counter);
             enemies_slain++;
+            logger << temp[1] << " slain by player id = "<<i<<"\n";
         }
         //check to see what charachter should be displayed for each enemy in the database
-        std::vector<std::string> temp = s1.get_one_row_id("game_enemies",i);
         if(temp[1]=="Emu"){
             whole_buffer[new_erow][new_ecol] = 'E';
         }
@@ -297,6 +311,7 @@ void Model::move_up(void){
         rowpos--;
     }
    u1.change_pos(current_player,rowpos,"row","players");
+    logger<<"player moved to row = "<< rowpos<< " col = "<<colpos<<" id = "<<current_player<<"\n";
 }
 
 void Model::move_down(void){
@@ -304,6 +319,7 @@ void Model::move_down(void){
         rowpos++;
     }
     u1.change_pos(current_player,rowpos,"row","players");
+    logger<<"player moved to row = "<< rowpos<< " col = "<<colpos<<" id = "<<current_player<<"\n";
 }
 
 void Model::move_left(void){
@@ -311,6 +327,7 @@ void Model::move_left(void){
         colpos--;
     }
     u1.change_pos(current_player,colpos,"col","players");
+    logger<<"player moved to row = "<< rowpos<< " col = "<<colpos<<" id = "<<current_player<<"\n";
 }
 
 void Model::move_right(void){
@@ -318,6 +335,7 @@ void Model::move_right(void){
         colpos++;
     }
     u1.change_pos(current_player,colpos,"col","players");
+    logger<<"player moved to row = "<< rowpos<< " col = "<<colpos<<" id = "<<current_player<<"\n";
 }
 //return the value of whole buffer at row and col
 char Model::buffer_value(int row, int col){
