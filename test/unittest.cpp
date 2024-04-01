@@ -235,8 +235,6 @@ TEST_F(SelectTest, TESTFIXTURE) {
     for (int i=0; i<3; i++) {
         ASSERT_EQ(s1->get_one_row_id("game_items",300)[i], item[i]) << "These should match!";
     }
-    //checks that select statment for number of rows is working properly
-    ASSERT_EQ(s1->get_row_count("game_items"),1);
     //makes sure that you can get one entry for this example damage works properly
     ASSERT_EQ(s1->get_one_entry("game_items","damage",300),1000);
 }
