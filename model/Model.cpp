@@ -141,10 +141,10 @@ if(s1.get_one_entry("players","health",current_player)<=0){
 
 //add hallways to the whole_buffer
 for(auto &hallway : hallways){
+    hallway.appear_or_not(colpos,rowpos);
+    hallway.reload_hallway();
     for (int row = 0; row < hallway.get_rowMax(); row++) {
         for (int col = 0; col < hallway.get_colMax(); col++) {
-            hallway.appear_or_not(colpos,rowpos);
-            hallway.reload_hallway();
             if(whole_buffer[row+hallway.get_offsetr()][col+hallway.get_offsetc()]!='+'){//avoid one hallway buffer covering other hallways
             whole_buffer[row+hallway.get_offsetr()][col+hallway.get_offsetc()]=hallway.buffer_value(row, col);
             }
@@ -153,10 +153,10 @@ for(auto &hallway : hallways){
 }
 //add rooms to the whole_buffer
 for(auto &room : rooms) {
+    room.appear_or_not(colpos,rowpos);
+    room.reload_room();
     for (int row = 0; row < room.get_rowMax(); row++) {
         for (int col = 0; col < room.get_colMax(); col++) {
-            room.appear_or_not(colpos,rowpos);
-            room.reload_room();
             whole_buffer[row+room.get_offsetr()][col+room.get_offsetc()]=room.buffer_value(row, col);
         }
     }
