@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.22)
-project(repo_lab6_final_2_mitchecj_jiangy)
+project(rogue-app)
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -39,7 +39,7 @@ target_link_libraries(unittests sqlite3)
 
 
 include_directories(dbtools)
-add_executable(repo_lab6_final_2_mitchecj_jiangy main.cpp
+add_executable(rogue-app main.cpp
         tools/Log.cpp
         tools/Log.h
         tools/Configuration.h
@@ -94,6 +94,6 @@ add_executable(rogue TUI/rogue.cpp
 )
 
 
-target_link_libraries(repo_lab6_final_2_mitchecj_jiangy sqlite3)
+target_link_libraries(rogue-app sqlite3)
 target_link_libraries(rogue sqlite3)
 target_link_libraries(rogue ncurses)
