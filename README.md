@@ -1,7 +1,7 @@
-#IMPORTANT READ FIRST
+IMPORTANT READ FIRST
 1. The Cedrien account is my github account provided by the school.
 
-#Personal Contributions To The Project
+Personal Contributions To The Project
 1. Enemy movement.
 2. Player movement.
 3. Enemy and item collision detection with the player.
@@ -15,7 +15,7 @@
 11. Death Screen.
 12. The ability to run several instances of the game at once.
 
-#How To Run The Project Locally
+How To Run The Project Locally
 1. Clone the remote repository using the URL provided.
 2. Open the project in CLion so that the cmake-build-debug directory is automatically generated.
 3. cd to the database directory, and then run from the command line make drop and then make build (cat the makefile to see more details).
