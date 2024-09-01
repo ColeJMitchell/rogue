@@ -6,7 +6,7 @@ Personal Contributions To The Project
 2. Player movement.
 3. Enemy and item collision detection with the player.
 4. A SQL driven backend which stores data on all objects in the game (enemy health, death status, damage values).
-5. A plethora of SQL queries to manipulate or fetch column entries.
+5. A plethora of SQL queries and updates to manipulate or fetch column entries.
 6. Enemy and item design and balancing.
 7. A logger that records every interaction in the game (movement, collision, and game state).
 8. Enemy and item rendering as well as removal.
