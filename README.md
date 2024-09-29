@@ -1,4 +1,4 @@
-![game](game.png)
+![game](game.png)<br>
 IMPORTANT READ FIRST
 1. The Cedrien account is my github account provided by the school.
 
